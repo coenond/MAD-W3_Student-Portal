@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddPortalActivity"
+            android:label="@string/AddPortalTitle"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.coen.mad_w3_student_portal.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
