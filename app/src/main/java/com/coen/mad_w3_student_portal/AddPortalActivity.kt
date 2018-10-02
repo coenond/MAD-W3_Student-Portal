@@ -26,10 +26,12 @@ class AddPortalActivity : AppCompatActivity() {
         val title: TextInputEditText = et_title
         val url: TextInputEditText = et_url
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("title", title.text.toString())
-        intent.putExtra("url", url.text.toString())
-        startActivity(intent)
+        val portal = Portal(title.text.toString(), url.text.toString())
+
+        val intent = Intent()
+        intent.putExtra("portal", portal)
+        setResult(200, intent)
+        finish()
     }
 
     private fun closeKeyboard() {

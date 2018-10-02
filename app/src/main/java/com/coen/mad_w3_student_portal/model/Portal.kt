@@ -1,12 +1,5 @@
 package com.coen.mad_w3_student_portal.model
 
-import android.webkit.URLUtil
+import java.io.Serializable
 
-class Portal(t: String, u: String) {
-    val title: String = t
-    val url: String = u
-
-    fun checkUrl(url: String): Boolean {
-        return URLUtil.isValidUrl(url)
-    }
-}
+data class Portal(val title: String, val url: String): Serializable

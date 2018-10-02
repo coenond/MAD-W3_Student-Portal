@@ -15,25 +15,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val intent = intent
-
-        if (intent.hasExtra("title") && intent.hasExtra("url")) {
-            addPortal(intent)
-        }
 
         fab.setOnClickListener {
             val intent = Intent(this, AddPortalActivity::class.java)
-            intent.putExtra("portal", portals)
-            startActivity(intent)
+            startActivityForResult(intent, 200)
         }
     }
 
-    private fun addPortal(intent: Intent) {
-        val title = intent.getStringExtra("title")
-        val url = intent.getStringExtra("url")
+    private fun addPortal(portal: Portal) {
+        portals.add(portal)
 
-        portals.add(Portal(title, url))
+        println("size " + portals.size)
+
+        for (portal in portals) {
+            println(portal)
+        }
+
         Snackbar.make(toolbar_title, "Portal $title added.", Snackbar.LENGTH_LONG)
                 .setAction("Undo", null).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        println("onactivityresult: $resultCode | $requestCode")
+
+        if (requestCode == 200) {
+            val portal = data?.getSerializableExtra("portal") as Portal
+            addPortal(portal)
+        }
     }
 }
