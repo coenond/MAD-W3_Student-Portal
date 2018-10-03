@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.webkit.WebView
 import com.coen.mad_w3_student_portal.model.Portal
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,10 +12,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     var portals = ArrayList<Portal>()
+    var portalAdapter = PortalAdapter({portal -> onPortalClick(portal)}, portals, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        portals.add(Portal("Roosters", "www.roosters.hva.nl"))
+        portals.add(Portal("MAD", "www.android-development.app"))
+
+        rv_portals.adapter = portalAdapter
 
         fab.setOnClickListener {
             val intent = Intent(this, AddPortalActivity::class.java)
@@ -24,26 +31,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun addPortal(portal: Portal) {
         portals.add(portal)
-
-        println("size " + portals.size)
-
-        for (portal in portals) {
-            println(portal)
-        }
-
+        portalAdapter.update(portals)
         Snackbar.make(toolbar_title, "Portal $title added.", Snackbar.LENGTH_LONG)
                 .setAction("Undo", null).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
-
-        println("onactivityresult: $resultCode | $requestCode")
-
         if (requestCode == 200) {
             val portal = data?.getSerializableExtra("portal") as Portal
             addPortal(portal)
         }
+    }
+
+    private fun onPortalClick(portal: Portal) {
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra("portal", portal)
+        startActivityForResult(intent, 200)
     }
 }

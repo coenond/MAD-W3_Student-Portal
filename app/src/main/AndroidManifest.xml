@@ -27,6 +27,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.coen.mad_w3_student_portal.MainActivity" />
         </activity>
+        <activity
+            android:name=".WebViewActivity"
+            android:parentActivityName=".WebViewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.coen.mad_w3_student_portal.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
