@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        portals.add(Portal("Roosters", "www.roosters.hva.nl"))
-        portals.add(Portal("MAD", "www.android-development.app"))
+        portals.add(Portal("Google", "https://google.com/"))
+        portals.add(Portal("MAD", "http://android-development.app"))
 
         rv_portals.adapter = portalAdapter
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private fun addPortal(portal: Portal) {
         portals.add(portal)
         portalAdapter.update(portals)
-        Snackbar.make(toolbar_title, "Portal $title added.", Snackbar.LENGTH_LONG)
+        Snackbar.make(toolbar_title, "Portal ${portal.title} added.", Snackbar.LENGTH_LONG)
                 .setAction("Undo", null).show()
     }
 
@@ -47,6 +47,6 @@ class MainActivity : AppCompatActivity() {
     private fun onPortalClick(portal: Portal) {
         val intent = Intent(this, WebViewActivity::class.java)
         intent.putExtra("portal", portal)
-        startActivityForResult(intent, 200)
+        startActivity(intent)
     }
 }
